@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-export function toastify({ title, type = "default" }) {
+export function toastify({ title, type }) {
   const position = {
     position: "top-center",
     autoClose: 3000,

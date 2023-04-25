@@ -15,6 +15,7 @@ import {
   doc,
   updateDoc,
   getDoc,
+  setDoc,
 } from "firebase/firestore";
 
 const googleAuth = new GoogleAuthProvider();
@@ -84,7 +85,7 @@ export const UpLoadFile = async (img) => {
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        upload = progress; // to show progress upload
+        upload = progress;
         switch (snapshot.state) {
           case "paused":
             console.log("Upload is paused");
@@ -125,8 +126,14 @@ export const getData = async (name) => {
 
 export const addData = async (name, data) => {
   try {
-    const docRef = await addDoc(collection(db, name), data);
-    console.log("Document written with ID: ", docRef.id);
+    await addDoc(collection(db, name), data);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
+export const addDataWithID = async (name, id, data) => {
+  try {
+    await setDoc(doc(db, name, id), data);
   } catch (e) {
     console.error("Error adding document: ", e);
   }
@@ -136,7 +143,6 @@ export const deleData = async (name, id) => {
   try {
     const docRef = doc(db, name, id);
     await deleteDoc(docRef);
-    console.log("Success");
   } catch (error) {
     console.log(error);
   }
@@ -145,7 +151,6 @@ export const updateData = async (name, id, newData) => {
   try {
     const docRef = doc(db, name, id);
     await updateDoc(docRef, newData);
-    console.log("Success");
   } catch (error) {
     console.log(error);
   }

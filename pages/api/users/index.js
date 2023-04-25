@@ -4,6 +4,8 @@ import {
   deleData,
   updateData,
   getItem,
+  addDataWithID,
+  signUpWithEmailAndPassword,
 } from "@/feature/firebase/firebaseAuth";
 
 const nameDB = "users";
@@ -12,9 +14,20 @@ export default async function handle(req, res) {
   const { method } = req;
 
   if (method === "POST") {
+    let payload = null;
+    const { account, password } = req.body;
     try {
-      await addData(nameDB, { ...req.body });
-      res.status(200).json({ message: "Data added successfully" });
+      const { result, error } = await signUpWithEmailAndPassword(
+        account,
+        password
+      );
+      if (!error) {
+        await addDataWithID(nameDB, result.user.uid, { ...req.body });
+        payload = result;
+      } else {
+        payload = result;
+      }
+      res.status(200).json(payload);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Something went wrong" });
