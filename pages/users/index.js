@@ -5,9 +5,11 @@ import Button from "@/components/Button";
 import Image from "next/image";
 import { AiOutlinePlus } from "react-icons/ai";
 import { TiArrowRightOutline } from "react-icons/ti";
+import UserFace from "@/components/UserFace";
 
 export default function User() {
   const [users, setUsers] = useState();
+  const handleDelete = () => {};
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get("/api/users");
@@ -37,25 +39,7 @@ export default function User() {
               key={item.id}
               className="relative py-2 flex flex-row justify-between border-b items-center"
             >
-              <div className="center-row">
-                <span className="relative  ml-4 pr-10">{item.name}</span>
-                <Image src={item.img} width={70} height={50} alt="" />
-              </div>
-              <div className="mr-10">
-                <Link
-                  href={`/users/update-user/${item.id}`}
-                  className="text-sm capitalize border-red-400 border px-2 rounded-lg py-1 mx-2 hover:text-white hover:bg-red-400"
-                >
-                  edit
-                </Link>
-                <button
-                  onClick={() => handleDelete(item.id)}
-                  className="text-sm capitalize border-red-400 border px-2 rounded-lg py-1 mx-2 hover:text-white hover:bg-red-400"
-                >
-                  delete
-                </button>
-              </div>
-              <TiArrowRightOutline className="arrow w-5 h-5 text-red-400" />
+              <UserFace callback={handleDelete} {...item} />
             </li>
           ))}
         </ul>

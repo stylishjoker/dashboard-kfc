@@ -5,6 +5,7 @@ import TextInput from "@/components/TextInput";
 import { toastify } from "@/components/Toastify";
 import Image from "next/image";
 import { UpLoadFile } from "@/feature/firebase/firebaseAuth";
+import Title from "@/components/Title";
 
 export default function AddUser() {
   const [account, setAccount] = useState("");
@@ -37,8 +38,9 @@ export default function AddUser() {
   useEffect(() => {}, []);
   return (
     <div className="bg-white p-4 flex flex-col min-w-[50vw] min-h-[50vh] rounded-xl">
-      <div className="flex flex-row justify-around items-center">
-        <div className="">
+      <Title content="create user" />
+      <div className="flex flex-row justify-around">
+        <div className="min-w-[500px]">
           <TextInput
             label="Full name"
             placeholder="Enter full name"
@@ -50,7 +52,7 @@ export default function AddUser() {
             label="address"
             placeholder="Enter address"
             type="text"
-            value={account}
+            value={address}
             onTextChange={(text) => setAddress(text)}
           />
           <TextInput
@@ -63,17 +65,19 @@ export default function AddUser() {
           <TextInput
             label="password"
             placeholder="Enter password"
+            type="password"
+            value={password}
+            onTextChange={(text) => setPassword(text)}
+          />
+          <TextInput
+            label="confirm password"
+            placeholder="Enter confirm password"
             type="text"
             value={password}
             onTextChange={(text) => setPassword(text)}
           />
-          {/* <TextInput
-        label="confirm password"
-        placeholder="Enter confirm password"
-        type="text"
-      /> */}
         </div>
-        <div>
+        <div className="center-col">
           <input
             className="border border-[#999]"
             type="file"
@@ -84,10 +88,15 @@ export default function AddUser() {
             <Image className="mt-2" src={img} width={100} height={100} alt="" />
           )}
         </div>
+        <div className="flex flex-col items-center justify-around">
+          <Button bg="bg-red-400" text="text-white" handleClick={postData}>
+            create
+          </Button>
+          <Button bg="bg-red-400" text="text-white" handleClick={postData}>
+            create
+          </Button>
+        </div>
       </div>
-      <Button bg="bg-red-400" text="text-white" handleClick={postData}>
-        create
-      </Button>
     </div>
   );
 }
