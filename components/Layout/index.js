@@ -8,7 +8,7 @@ import Menu from "../Menu";
 
 export default function Layout({ children }) {
   const { userInfo } = useContext(AuthContext);
-  const handleClick = async () => {
+  const handleLogin = async () => {
     const { result, error } = await signInGoogle();
   };
   const handleSignOut = async () => {
@@ -17,7 +17,7 @@ export default function Layout({ children }) {
   if (userInfo === null) {
     return (
       <div className="bg-blue-900 w-screen h-screen center-row">
-        <Button handleClick={handleClick}>
+        <Button handleClick={handleLogin}>
           <FcGoogle className="w-7 h-7" /> Login with google
         </Button>
       </div>
