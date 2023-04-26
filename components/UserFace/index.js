@@ -1,7 +1,8 @@
 import Image from "next/image";
-import Button from "../Button";
 import Link from "next/link";
 import { useState } from "react";
+import UserPayment from "../UserPayment";
+import UserCard from "../CardUser";
 
 export default function UserFace({ id, img, callback, name, account }) {
   const [show, setShow] = useState(true);

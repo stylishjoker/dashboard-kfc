@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Link from "next/link";
-import Button from "@/components/Button";
-import { AiOutlinePlus } from "react-icons/ai";
 import UserFace from "@/components/UserFace";
 import AddNew from "@/components/AddNew";
 
