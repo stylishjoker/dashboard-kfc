@@ -3,18 +3,31 @@ import Link from "next/link";
 import { useState } from "react";
 import UserPayment from "../UserPayment";
 import UserCard from "../CardUser";
+import Avatar from "../Avatar";
 
 export default function UserFace({ id, img, callback, name, account }) {
   const [show, setShow] = useState(true);
   return (
     <div className="relative center-col bg-white p-4 rounded border border-red-200 card-shadow min-w-[220px] min-h-[300px]">
-      <Image
-        src={img}
-        className="rounded-full w-28 h-28 border-[4px] border-[#ccc] my-1 block"
-        width={100}
-        height={100}
-        alt=""
-      />
+      {img ? (
+        <Image
+          src={img}
+          className="rounded-full w-28 h-28 border-[4px] border-[#ccc] my-1 block"
+          width={100}
+          height={100}
+          alt=""
+        />
+      ) : (
+        <Image
+          src={
+            "https://i.pinimg.com/564x/d9/7b/bb/d97bbb08017ac2309307f0822e63d082.jpg"
+          }
+          className="rounded-full w-28 h-28 border-[4px] border-[#ccc] my-1 block"
+          width={100}
+          height={100}
+          alt=""
+        />
+      )}
       <span className="font-semibold text-center text-xl my-1">{name}</span>
       <span className="text-sm text-slate-600 mx-1">{account}</span>
       <Link

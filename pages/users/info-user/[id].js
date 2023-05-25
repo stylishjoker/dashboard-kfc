@@ -7,12 +7,13 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 import UserPayment from "@/components/UserPayment";
 import UserCard from "@/components/CardUser";
+import Avatar from "@/components/Avatar";
 
 export default function InfoUser() {
   const router = useRouter();
   const { id } = router.query;
   const [loading, setLoading] = useState(false);
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [name, setName] = useState(null);
   const [address, setAddress] = useState(null);
   const [account, setAccount] = useState(null);
@@ -43,13 +44,17 @@ export default function InfoUser() {
   return (
     <div className="flex flex-row justify-around items-center h-[90vh]">
       <div className="card-shadow flex flex-col rounded-xl overflow-hidden min-h-[500px]">
-        <Image
-          className="w-[250px] h-[250px] mt-2 m-auto rounded-full"
-          src={img}
-          width={100}
-          height={100}
-          alt=""
-        />
+        {img ? (
+          <Image
+            className="w-[250px] h-[250px] mt-2 m-auto rounded-full"
+            src={img}
+            width={100}
+            height={100}
+            alt=""
+          />
+        ) : (
+          <Avatar />
+        )}
         <div className="flex flex-col px-3">
           <input
             className="outline-0 font-bold text-2xl text-center uppercase my-2"

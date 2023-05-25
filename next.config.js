@@ -7,10 +7,8 @@ const nextConfig = {
       "kfcvn-static.cognizantorderserv.com",
       "static.kfcvietnam.com.vn",
       "firebasestorage.googleapis.com",
+      "i.pinimg.com",
     ],
-  },
-  experimental: {
-    appDir: true,
   },
 };
 

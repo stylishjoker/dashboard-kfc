@@ -31,12 +31,17 @@ export default function NewProduct() {
     const data = { name, description, price, type, img };
     await axios.post("/api/product", data);
     toastify({ title: "Update successfull", type: "success" });
+    // setDescription("");
+    // setImg("");
+    // setName("");
+    // setPrice("");
+    // setType("");
   };
 
   return (
     <div className="bg-white p-4 flex flex-col min-w-[50vw] min-h-[50vh] rounded-xl">
       <div className="flex flex-row justify-around items-center">
-        <div>
+        {/* <div>
           <input
             className="border border-[#999]"
             type="file"
@@ -46,8 +51,13 @@ export default function NewProduct() {
           {img && (
             <Image className="mt-2" src={img} width={100} height={100} alt="" />
           )}
-        </div>
+        </div> */}
         <div>
+          <TextInput
+            label="img"
+            value={img}
+            onTextChange={(text) => setImg(text)}
+          />
           <TextInput
             label="Name"
             value={name}

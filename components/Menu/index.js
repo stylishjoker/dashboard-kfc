@@ -10,21 +10,25 @@ const object = [
     name: "home",
     icon: <BiHomeAlt2 className=" mr-2 w-7 h-7" />,
     link: "/",
+    check: "",
   },
   {
     name: "product",
     icon: <HiOutlineArchiveBox className=" mr-2 w-7 h-7" />,
     link: "/product",
+    check: "product",
   },
   {
     name: "admins",
     icon: <RiTeamLine className=" mr-2 w-7 h-7" />,
     link: "/admins",
+    check: "admins",
   },
   {
     name: "users",
     icon: <FiUsers className=" mr-2 w-7 h-7" />,
     link: "/users",
+    check: "users",
   },
 ];
 
@@ -38,7 +42,7 @@ export default function Menu() {
           <li
             key={item.name}
             className={`flex px-4 py-1 rounded-l-lg flex-grow gap-1 mb-4 ${
-              str[1] === item.name ? "bg-red-400 text-white" : ""
+              str[1] === item.check ? "bg-red-400 text-white" : ""
             }`}
           >
             <Link
