@@ -5,9 +5,7 @@ import AddNew from "@/components/AddNew";
 
 export default function User() {
   const [users, setUsers] = useState();
-  const handleDelete = () => {
-    const res = axios.delete(`/api/users`);
-  };
+
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get("/api/users");
@@ -33,7 +31,7 @@ export default function User() {
               key={item.id}
               className="relative py-2 flex flex-row justify-between items-center"
             >
-              <UserFace callback={handleDelete} {...item} />
+              <UserFace {...item} />
             </li>
           ))}
         </ul>
