@@ -18,12 +18,12 @@ const object = [
     link: "/product",
     check: "product",
   },
-  {
-    name: "admins",
-    icon: <RiTeamLine className=" mr-2 w-7 h-7" />,
-    link: "/admins",
-    check: "admins",
-  },
+  // {
+  //   name: "admins",
+  //   icon: <RiTeamLine className=" mr-2 w-7 h-7" />,
+  //   link: "/admins",
+  //   check: "admins",
+  // },
   {
     name: "users",
     icon: <FiUsers className=" mr-2 w-7 h-7" />,

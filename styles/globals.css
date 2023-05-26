@@ -59,3 +59,18 @@ li:hover .arrow {
       rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   }
 }
+.flex-30 {
+  flex: 0 0 30%;
+}
+.flex-60 {
+  flex: 0 0 60%;
+}
+.flex-40 {
+  flex: 0 0 40%;
+}
+.roboto {
+  font-family: "Roboto", sans-serif;
+}
+.oswald {
+  font-family: "Oswald", sans-serif;
+}

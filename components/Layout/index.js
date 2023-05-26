@@ -31,7 +31,8 @@ export default function Layout({ children }) {
                 height="400"
               />
             </div>
-            <div className="flex-grow justify-center flex">
+            <div className="flex-grow flex-col items-center flex">
+              <h2 className="mb-10 oswald text-2xl">Đăng nhập</h2>
               <button
                 className="flex border border-red-500 px-4 py-2 rounded-xl text-red-500 hover:bg-red-400 hover:text-white font-bold"
                 onClick={handleLogin}

@@ -92,8 +92,12 @@ export default function AddUser() {
           <Button bg="bg-red-400" text="text-white" handleClick={postData}>
             create
           </Button>
-          <Button bg="bg-red-400" text="text-white" handleClick={postData}>
-            create
+          <Button
+            bg="border border-black"
+            text="text-black"
+            handleClick={postData}
+          >
+            cancel
           </Button>
         </div>
       </div>

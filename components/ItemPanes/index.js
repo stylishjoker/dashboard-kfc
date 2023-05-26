@@ -5,6 +5,7 @@ import TextInput from "../TextInput";
 import { UpLoadFile } from "@/feature/firebase/firebaseAuth";
 import axios from "axios";
 import { useRouter } from "next/router";
+import DropdownInput from "../dropdown-input";
 
 export default function ItemPanes({ data, callback }) {
   const router = useRouter();
@@ -14,6 +15,7 @@ export default function ItemPanes({ data, callback }) {
   const [type, setType] = useState("");
   const [img, setImg] = useState("");
   const [id, setID] = useState("");
+  const [allType, setAllType] = useState(null);
 
   const getData = () => {
     if (data) {
@@ -41,13 +43,22 @@ export default function ItemPanes({ data, callback }) {
     const data = { id, name, description, type, img, price };
     axios.put("/api/product", data);
   };
+  async function fecthType() {
+    const res = await axios.get("/api/item");
+    const data = await res.data;
+    setAllType(data);
+  }
   useEffect(() => {
+    fecthType();
     getData();
   }, []);
+  if (!allType) {
+    return <h2>Loading...</h2>;
+  }
   return (
     <div className="bg-white p-4 flex flex-col min-w-[50vw] min-h-[50vh] rounded-xl">
-      <div className="flex flex-row justify-around items-center">
-        <div>
+      <div className="flex">
+        <div className="flex flex-col justify-center p-2 items-center">
           <Image src={img} width={150} height={150} alt="" />
           <input
             className="border border-[#999] mt-2"
@@ -55,7 +66,7 @@ export default function ItemPanes({ data, callback }) {
             onChange={(text) => handleSelectedFile(text.target.files)}
           />
         </div>
-        <div>
+        <div className="flex-40">
           <TextInput
             label="Name"
             value={name}
@@ -66,9 +77,10 @@ export default function ItemPanes({ data, callback }) {
             value={price}
             onTextChange={(text) => setPrice(text)}
           />
-          <TextInput
-            label="Type"
+          <DropdownInput
+            label="Type food"
             value={type}
+            data={allType}
             onTextChange={(text) => setType(text)}
           />
           <div className="flex flex-col justify-center items-left mt-[20px]">
@@ -83,7 +95,7 @@ export default function ItemPanes({ data, callback }) {
           </div>
         </div>
       </div>
-      <div className="flex flex-row justify-around mt-6">
+      <div className="flex w-[400px] justify-around mt-6">
         <Button handleClick={handleSave} text="text-white" bg="bg-red-400">
           update
         </Button>

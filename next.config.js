@@ -7,6 +7,7 @@ const nextConfig = {
       "kfcvn-static.cognizantorderserv.com",
       "static.kfcvietnam.com.vn",
       "firebasestorage.googleapis.com",
+      "raw.githubusercontent.com",
       "i.pinimg.com",
     ],
   },

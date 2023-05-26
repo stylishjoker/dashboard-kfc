@@ -9,8 +9,9 @@ export default function UpdateProduct() {
   const { id } = router.query;
   useEffect(() => {
     const getData = async () => {
-      const res = await axios.get("/api/product", id);
-      setProduct(res.data);
+      const res = await axios.post("/api/item", { id, name: "products" });
+      const data = await res.data;
+      setProduct({ ...data, id });
     };
     getData();
   }, []);
@@ -18,10 +19,8 @@ export default function UpdateProduct() {
     return <h2>Loading....</h2>;
   }
   return (
-    <div>
-      {product.map((item) => (
-        <ItemPanes data={item} />
-      ))}
-    </div>
+    <>
+      <ItemPanes data={product} />
+    </>
   );
 }

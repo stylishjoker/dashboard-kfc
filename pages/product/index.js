@@ -5,22 +5,21 @@ import { TiArrowRightOutline } from "react-icons/ti";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import CardList from "@/components/card-list";
 
 export default function Product() {
   const [products, setProducts] = useState([]);
 
   async function fetchData() {
-    const response = await axios.get("/api/product");
+    const response = await axios.get("/api/item");
     const data = await response.data;
     setProducts(data);
   }
+  console.log(products);
   useEffect(() => {
     fetchData();
   }, []);
-  const handleDelete = async (id) => {
-    const data = { id };
-    await axios.delete("/api/product", data);
-  };
+
   return (
     <div className="p-4">
       <div className="z-10 bg-white">
@@ -31,36 +30,13 @@ export default function Product() {
           </Button>
         </Link>
       </div>
-      <div className="pt-2">
-        <h2 className="uppercase font-bold">Product name</h2>
-        <ul>
-          {products.map((item) => (
-            <li
-              key={item.id}
-              className="relative py-2 flex flex-row justify-between border-b items-center"
-            >
-              <div className="center-row">
-                <span className="relative  ml-4 pr-10">{item.name}</span>
-                <Image src={item.img} width={70} height={50} alt="" />
-              </div>
-              <div className="mr-10">
-                <Link
-                  href={`/product/update-product/${item.id}`}
-                  className="text-sm capitalize border-red-400 border px-2 rounded-lg py-1 mx-2 hover:text-white hover:bg-red-400"
-                >
-                  edit
-                </Link>
-                <button
-                  onClick={() => handleDelete(item.id)}
-                  className="text-sm capitalize border-red-400 border px-2 rounded-lg py-1 mx-2 hover:text-white hover:bg-red-400"
-                >
-                  delete
-                </button>
-              </div>
-              <TiArrowRightOutline className="arrow w-5 h-5 text-red-400" />
-            </li>
-          ))}
-        </ul>
+      <div className="mt-4 grid grid-flow-row gap-8 xsm:gap-0 xsm:grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {/* <div className="group card-shadow border border-red-400 cursor-pointer w-[265px] overflow-hidden rounded center-col">
+          <AiOutlinePlus className="w-16 h-16 p-3 bg-white rounded rounded-full text-red-400 border-2 border-red-600 group-hover:bg-red-100" />
+        </div> */}
+        {products.map((item) => (
+          <CardList key={item.id} {...item} />
+        ))}
       </div>
     </div>
   );

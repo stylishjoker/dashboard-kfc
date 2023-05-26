@@ -6,7 +6,7 @@ import AddNew from "@/components/AddNew";
 export default function User() {
   const [users, setUsers] = useState();
   const handleDelete = () => {
-    console.log("hehe");
+    const res = axios.delete(`/api/users`);
   };
   useEffect(() => {
     const getData = async () => {

@@ -19,7 +19,7 @@ export default async function handle(req, res) {
     }
   }
 
-  if (method === "GET" && !req.body.id) {
+  if (method === "GET") {
     try {
       const data = await getData("products");
       res.status(200).json(data);
@@ -31,8 +31,9 @@ export default async function handle(req, res) {
 
   if (method === "DELETE") {
     try {
-      await deleData("products", { ...req.body });
-      res.status(200).json({ message: "Data deleted successfully" });
+      const { id } = req.query;
+      await deleData("products", id);
+      res.status(200).json({ success: true });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Something went wrong" });
@@ -40,18 +41,9 @@ export default async function handle(req, res) {
   }
   if (method === "PUT") {
     try {
-      const data = req.body;
-      await updateData("products", data.id, { ...data });
-      res.status(200).json({ message: "Data updated successfully" });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Something went wrong" });
-    }
-  }
-  if (method === "GET" && req.body.id) {
-    try {
-      const data = await getItem("products", req.body.id);
-      res.status(200).json(data);
+      const { id, name, description, price, img, type } = req.body;
+      await updateData("products", id, { name, description, price, img, type });
+      res.status(200).json({ success: true });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Something went wrong" });

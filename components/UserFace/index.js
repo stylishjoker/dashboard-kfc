@@ -1,14 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import UserPayment from "../UserPayment";
-import UserCard from "../CardUser";
-import Avatar from "../Avatar";
+import axios from "axios";
+import CardLoader from "../card-loader";
 
-export default function UserFace({ id, img, callback, name, account }) {
+export default function UserFace({ id, img, name, account }) {
   const [show, setShow] = useState(true);
+  const [display, setDisplay] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const handleDelete = async () => {
+    setLoading(true);
+    const res = await axios.delete(`/api/users?id=${id}`);
+    const data = await res.data;
+    if (data.success) {
+      console.log("hêhe");
+      setLoading(false);
+      setDisplay(false);
+    }
+  };
   return (
-    <div className="relative center-col bg-white p-4 rounded border border-red-200 card-shadow min-w-[220px] min-h-[300px]">
+    <div
+      className={`${
+        !display ? "hidden" : "flex"
+      } relative flex-col items-center justify-center bg-white p-4 rounded border border-red-200 card-shadow min-w-[220px] min-h-[300px]`}
+    >
       {img ? (
         <Image
           src={img}
@@ -49,16 +64,10 @@ export default function UserFace({ id, img, callback, name, account }) {
       >
         <button
           className="text-[13px] py-[2px] px-3 text-[#ccc] hover:text-black"
-          handleClick={callback}
+          onClick={handleDelete}
         >
           Delete
         </button>
-        <Link
-          className="text-[13px] py-[2px] px-3 text-[#ccc] hover:text-black"
-          href={`/users/update-user/${id}`}
-        >
-          Edit
-        </Link>
         <button
           className="text-[13px] py-[2px] px-3 text-[#ccc] hover:text-black"
           onClick={() => setShow(!show)}
@@ -66,6 +75,8 @@ export default function UserFace({ id, img, callback, name, account }) {
           Cancel
         </button>
       </div>
+
+      {loading && <CardLoader />}
     </div>
   );
 }
