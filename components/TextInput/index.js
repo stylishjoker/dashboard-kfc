@@ -4,12 +4,13 @@ export default function TextInput({
   type = "text",
   onTextChange,
   value,
+  error,
 }) {
   const onUdateInputValue = (event) => {
     onTextChange(event.target.value);
   };
   return (
-    <div className="flex flex-col justify-center items-left mt-[20px]">
+    <div className="flex relative flex-col justify-center items-left mt-[20px] pb-4">
       <label className="capitalize font-semibold">{label}</label>
       <input
         value={value}
@@ -18,6 +19,9 @@ export default function TextInput({
         type={type}
         placeholder={placeholder}
       />
+      <span className="absolute bottom-[-20px] text-xs text-red-400">
+        {error}
+      </span>
     </div>
   );
 }

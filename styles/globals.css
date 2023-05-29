@@ -59,6 +59,9 @@ li:hover .arrow {
       rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   }
 }
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 .flex-30 {
   flex: 0 0 30%;
 }

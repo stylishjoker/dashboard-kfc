@@ -12,7 +12,6 @@ export default function Home() {
     setDashBoard(data);
     console.log(data);
   }
-  // console.log(dashboard);
   useEffect(() => {
     fectchData();
   }, []);
@@ -57,10 +56,6 @@ export default function Home() {
             <span className="roboto text-2xl">
               {formatMoney(dashboard.registed)}
             </span>
-          </div>
-          <div className="m-2 flex flex-col justify-between border border-red-500 w-[300px] h-[80px] p-2 rounded-2xl">
-            <span className="text-xs font-bold">Online Members</span>
-            <span className="roboto text-2xl">{formatMoney(234)}</span>
           </div>
         </div>
       </div>

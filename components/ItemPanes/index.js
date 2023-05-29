@@ -6,8 +6,9 @@ import { UpLoadFile } from "@/feature/firebase/firebaseAuth";
 import axios from "axios";
 import { useRouter } from "next/router";
 import DropdownInput from "../dropdown-input";
+import { toastify } from "../Toastify";
 
-export default function ItemPanes({ data, callback }) {
+export default function ItemPanes({ data }) {
   const router = useRouter();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -39,9 +40,15 @@ export default function ItemPanes({ data, callback }) {
       console.error("File size to large");
     }
   };
-  const handleSave = () => {
-    const data = { id, name, description, type, img, price };
-    axios.put("/api/product", data);
+  const handleSave = async () => {
+    const input = { id, name, description, type, img, price };
+    const res = await axios.put("/api/product", input);
+    const data = await res.data;
+    if (data.success) {
+      toastify({ title: "Update successful", type: "success" });
+    } else {
+      toastify({ title: "Account already exists", type: "error" });
+    }
   };
   async function fecthType() {
     const res = await axios.get("/api/item");

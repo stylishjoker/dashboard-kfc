@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Image from "next/image";
+import { toastify } from "@/components/Toastify";
 import Button from "@/components/Button";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
@@ -15,10 +15,8 @@ export default function InfoUser() {
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(true);
   const [name, setName] = useState(null);
-  const [address, setAddress] = useState(null);
   const [account, setAccount] = useState(null);
   const [password, setPassword] = useState(null);
-  const [img, setImg] = useState(null);
   const [phone, setPhone] = useState(null);
   const [cart, setCart] = useState(null);
   const [previousOrder, setPreviousOrder] = useState(null);
@@ -29,11 +27,23 @@ export default function InfoUser() {
     const user = data[0];
     setAccount(user.account);
     setPassword(user.password);
-    setImg(user.img);
-    setAddress(user.address);
     setPhone(user.phone);
     setName(user.name);
     setLoading(true);
+  };
+  const handleSave = async () => {
+    try {
+      const data = { id, account, password, name, phone };
+      const response = await axios.put("/api/users", data);
+      const result = response.data;
+      if (result) {
+        toastify({ title: "Update account successful", type: "success" });
+      } else {
+        toastify({ title: "Account already exists", type: "error" });
+      }
+    } catch (error) {
+      toastify({ title: "Something went wrong", type: "error" });
+    }
   };
   const getCart = async () => {
     const res = await axios.post("/api/item", { id, name: "cart" });
@@ -54,7 +64,6 @@ export default function InfoUser() {
     getPreviousOrder();
     getCart();
   }, []);
-  console.log(cart, previousOrder);
   const ShowPassword = () => {
     return show ? <AiOutlineEye /> : <AiOutlineEyeInvisible />;
   };
@@ -65,31 +74,22 @@ export default function InfoUser() {
     <div className="flex flex-row container justify-around h-[90vh]">
       <div className="flex-30 relative">
         <div className="card-shadow sticky top-[100px] flex flex-col rounded-xl overflow-hidden">
-          {img ? (
-            <Image
-              className="w-[250px] h-[250px] mt-2 m-auto rounded-full"
-              src={img}
-              width={100}
-              height={100}
-              alt=""
-            />
-          ) : (
-            <Avatar />
-          )}
+          <Avatar />
           <div className="flex flex-col px-3">
             <input
-              className="outline-0 font-bold text-2xl text-center uppercase my-2"
+              className="outline-0 font-bold text-2xl text-center uppercase my-2 cursor-pointer"
               value={name}
               onChange={(text) => setName(text.target.value)}
             />
             <div className="relative flex flex-row justify-between">
               <input
-                className="outline-0"
+                className="outline-0  bg-white"
                 value={account}
                 onChange={(text) => setAccount(text.target.value)}
+                disabled={true}
               />
               <input
-                className="text-right outline-0 pr-6"
+                className="text-right outline-0 pr-6 cursor-pointer"
                 value={password}
                 onChange={(text) => setPassword(text.target.value)}
                 type={!show ? "text" : "password"}
@@ -101,25 +101,22 @@ export default function InfoUser() {
                 <ShowPassword />
               </div>
             </div>
-            <div className="flex flex-row items-center border-b justify-between mt-2">
-              <span className="uppercase font-semibold">address :</span>
-              <input
-                className="flex-grow p-1 outline-0"
-                value={address}
-                onChange={(text) => setAddress(text.target.value)}
-              />
-            </div>
+
             <div className="flex flex-row items-center border-b justify-between mt-2">
               <span className="uppercase font-semibold">number phone :</span>
               <input
-                className="flex-grow p-1 outline-0"
+                className="flex-grow p-1 outline-0 cursor-pointer"
                 value={phone}
                 onChange={(text) => setPhone(text.target.value)}
               />
             </div>
           </div>
           <div className="text-center p-4">
-            <Button bg="bg-red-300 border-2 border-red-400" text="text-white">
+            <Button
+              handleClick={handleSave}
+              bg="bg-red-300 border-2 border-red-400"
+              text="text-white"
+            >
               Save
             </Button>
           </div>
